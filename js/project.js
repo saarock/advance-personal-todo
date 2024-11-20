@@ -245,4 +245,11 @@ document.querySelector(".search-button").addEventListener("click", () => {
 
 projectList.addEventListener("click", (event) => {
     event.currentTarget.style.visibility = "hidden"
+});
+
+
+// notice
+notty.success({
+    message: "Pleased this app is for only laptop users to manage there rotine efficently.",
+    timeOut: 900000000
 })
