@@ -250,6 +250,6 @@ projectList.addEventListener("click", (event) => {
 
 // notice
 notty.success({
-    message: "Pleased this app is for only laptop users to manage there rotine efficently.",
+    message: "Pleased note that this app is for only big screen to manage there rotine efficently.",
     timeOut: 900000000
 })
