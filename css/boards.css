@@ -250,3 +250,28 @@ main {
     align-items: center;
     width: 100%;
 }
+
+.navs-navbars-nav-navchild {
+    list-style-type: none;
+}
+.navs-navbars-nav-navchild-writeProject {
+    width: 100%;
+    height: 2rem;
+    background-color: rgb(53, 47, 47);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: white;
+}
+.navs-navbars-nav-navchild-addProject {
+border: none;
+padding: 5px 10px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 0.9rem;
+font-weight: bold;
+color: #eaeaea;
+background-color:   #24244f;
+transition: 0.9s;
+margin: 0.5rem;
+}
