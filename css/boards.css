@@ -1,0 +1,252 @@
+
+
+main {
+    position: relative;
+    height: 100vh;
+
+}
+.boards {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    justify-content: flex-start;
+    overflow: auto;
+    flex-shrink: none;
+    letter-spacing: normal;
+    min-height: 100%;
+}
+
+/* Board card */
+.board-card {
+    background-color: #16213e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    min-width: 40rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #eaeaea;
+    position: relative;
+
+}
+
+/* Board header */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.board-title {
+    font-weight: bold;
+}
+
+.board-date {
+    font-size: 0.9rem;
+    color: #b0b0b0;
+}
+
+/* Task container */
+.task-container h4 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.task-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    background-color: #0f3460;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #eaeaea;
+    padding: 1rem;
+    word-break: break-all;
+}
+
+.task-item.no-tasks {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
+
+.task-name {
+    font-size: 1rem;
+    padding: 1rem;
+    word-break: break-all;
+    max-width: 12rem;
+    min-width: 12rem;
+}
+
+/* Task buttons */
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.task-btn {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #eaeaea;
+    background-color: #1b1b2f;
+    transition: background-color 0.3s;
+}
+
+.task-btn:hover {
+    background-color: #0f3460;
+}
+
+.done-btn {
+    background-color: #28a745;
+}
+
+.done-btn:hover {
+    background-color: #218838;
+}
+
+.update-btn {
+    background-color: #ffc107;
+    color: #1a1a2e;
+}
+
+.update-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Add task section */
+.add-task {
+    display: flex;
+    gap: 10px;
+
+}
+
+.add-task-input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #1b1b2f;
+    color: #eaeaea;
+}
+
+.add-task-input::placeholder {
+    color: #666;
+}
+
+.add-task-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: #eaeaea;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-task-btn:hover {
+    background-color: #218838;
+}
+
+.task-done {
+    position: relative;
+}
+
+.task-done::after {
+    content:  "Completed";
+    background-color: green;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+}
+
+/* header */
+.header {
+    display: flex;
+}
+.navs {
+    width: 100%;
+    display: flex;
+}
+.navs-navbars {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    color: white;
+}
+.navs-navbars-nav {
+    display: flex;
+}
+.back {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* .three-dot-board {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    display: none;
+} */
+
+.remove-board {
+    position: absolute;
+    top: -1rem;
+    /* color: red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    right: -0.4rem;
+    font-size: 1.7rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.remove-board:hover {
+    background-color: rgb(121, 0, 0);
+}
+.message-not-board {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
