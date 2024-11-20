@@ -13,12 +13,12 @@ main {
     overflow: auto;
     flex-shrink: none;
     letter-spacing: normal;
-    min-height: 100%;
+    min-height: 80%;
 }
 
 /* Board card */
 .board-card {
-    background-color: #16213e;
+    background-color: #1b1b2f;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -198,6 +198,9 @@ main {
 .navs {
     width: 100%;
     display: flex;
+  border-bottom: 0.54px solid rgba(255, 255, 255, 0.03);
+  margin-bottom: 2rem;
+
 }
 .navs-navbars {
     width: 100%;
@@ -274,4 +277,15 @@ color: #eaeaea;
 background-color:   #24244f;
 transition: 0.9s;
 margin: 0.5rem;
+}
+.project-name {
+    text-transform: uppercase;
+    font-size: 1.7rem ;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #5ca5ff;
+}
+.project-name::before {
+    content: "ProjectName: ";
+    text-transform: capitalize;
+    color: white;
 }

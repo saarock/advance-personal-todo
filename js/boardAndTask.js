@@ -80,11 +80,18 @@ function loadBoards() {
         const project = projects.filter((pr) => pr.id === Number(urlParams.get("id")))[0];
         proejctName.innerHTML = project.name
         if (project.boards.length >= 1) {
-        project.boards.reverse().forEach((board, boardIndex) => {
-            console.log(board.tasks)
-            boards.innerHTML += `
+            project.boards.reverse().forEach((board, boardIndex) => {
+           
+
+                boards.innerHTML += `
             <div class="board-card">
-       <span class="remove-board" id="${boardIndex}" data-board-id="${board.id}"><i class="fa-solid fa-xmark"></i></span>
+     <span 
+  class="remove-board" 
+  data-board-index="${boardIndex}" 
+  id="${board.id}">
+    <i class="fa-solid fa-xmark"></i>
+</span>
+
 
                 <div class="board-header">
                     <span class="board-title">${board.name}</span>
@@ -94,20 +101,20 @@ function loadBoards() {
                     <h4>Tasks:</h4>
                     <ul class="task-list">
                         ${board.tasks && board.tasks.length > 0
-                    ? board.tasks.map(
-                        (task, index) => `
+                        ? board.tasks.map(
+                            (task, index) => `
                             <li class="task-item" data-task-id="${index}">
                                 <span class="task-name ${task.done ? 'task-done' : ''}">${task.name}</span>
                                 <span class="task-date">Created: ${new Date(task.createdDate).toLocaleDateString()}</span>
                                 <div class="task-actions">
-                                    <button class="task-btn done-btn" data-task-id="${index}" id="${board.id}">Done</button>
-                                    <button class="task-btn update-btn" data-task-id="${index}" id="${board.id}">Update</button>
-                                    <button class="task-btn delete-btn" data-task-id="${index}" id="${board.id}">Delete</button>
+                                    <button class="task-btn done-btn" data-task-id="${index}" id="${board.id}"><i class="fa-solid fa-check"></i></button>
+                                    <button class="task-btn update-btn" data-task-id="${index}" id="${board.id}">Update<i class="fa-regular fa-pen-to-square"></i></button>
+                                    <button class="task-btn delete-btn" data-task-id="${index}" id="${board.id}">Delete<i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </li>`
-                    ).join("")
-                    : `<li class="task-item no-tasks">No tasks added yet.</li>`
-                }
+                        ).join("")
+                        : `<li class="task-item no-tasks">No tasks added yet.</li>`
+                    }
                     </ul>
                 </div>
                 <div class="add-task">
@@ -124,12 +131,12 @@ function loadBoards() {
                 </div
 
             </div>`;
-        });
-    } else {
-        boards.innerHTML = `
+            });
+        } else {
+            boards.innerHTML = `
         <h1 class="message-not-board">No boards are found.</h1>
         `
-    }
+        }
 
     };
 
@@ -157,7 +164,7 @@ function loadBoards() {
 
     markAsDone.forEach((button) => {
         button.addEventListener("click", (event) => {
-            const taskId = event.target.dataset.taskId;
+            const taskId = event.currentTarget.dataset.taskId;
             markTaskAsDone(Number(urlParams.get("id")), Number(button.id), Number(taskId));
 
         });
@@ -167,7 +174,7 @@ function loadBoards() {
 
     deleteTaskBtn.forEach((button) => {
         button.addEventListener("click", (event) => {
-            const taskId = event.target.dataset.taskId;
+            const taskId = event.currentTarget.dataset.taskId;
             deleteTask(Number(urlParams.get("id")), Number(button.id), Number(taskId));
         });
 
@@ -176,7 +183,7 @@ function loadBoards() {
     updateTaskBtn.forEach((button) => {
         button.addEventListener("click", (event) => {
             const value = window.prompt();
-            const taskId = event.target.dataset.taskId;
+            const taskId = event.currentTarget.dataset.taskId;
             updateTask(Number(urlParams.get("id")), Number(button.id), Number(taskId), value);
         });
 
@@ -184,9 +191,10 @@ function loadBoards() {
 
     removeBoardBtns.forEach((removeBoardBtn) => {
         removeBoardBtn.addEventListener("click", (event) => {
-            const boardIndex =event.target.id;
-            const boardId = event.target.dataset.boardId;
-            removeBoard(Number(boardId), boardIndex, allTheBoards, Number(urlParams.get("id")));
+            const boardId = event.currentTarget.id;
+            const boardIndex = event.currentTarget.dataset.boardIndex;
+            console.log(boardIndex, boardId)
+            removeBoard(Number(boardId), Number(boardIndex), allTheBoards, Number(urlParams.get("id")));
         })
 
     })
@@ -291,34 +299,46 @@ function deleteTask(projectIndex, boardIndex, taskId) {
 }
 
 
-// function to remove the board;
+
+// Function to remove a board
 function removeBoard(boardId, boardIndex, allTheBoards, projectId) {
+
     if (allTheBoards.length > 0) {
         const projects = JSON.parse(localStorage.getItem("projects"));
-        if (projects.length > 0) {
-            const project = projects.filter((pr) => pr.id === projectId);
-            if (project.length <=0) {
+        if (projects && projects.length > 0) {
+            // Find the current project
+            const currentProject = projects.find((pr) => pr.id === projectId);
+
+            if (!currentProject) {
                 notty.error({
-                    message: "Something wrong pleased refresh and try again."
-                })
+                    message: "Something went wrong, please refresh and try again."
+                });
                 return;
             }
-            const currentProject = project[0];
-            const boards = currentProject.boards;
-            if (boards.length >= 1) {
+
+
+
+            const boards = currentProject.boards || [];
+            if (boards.length > 0) {
+                // Filter out the board to be removed
                 const newBoards = boards.filter((brd) => brd.id !== boardId);
                 currentProject.boards = newBoards;
-                const newCurrentProjects = projects.map((project) => {
-                    if (project.id === projectId) {
-                        project = currentProject;
-                    }
-                    return project;
-                });
-                localStorage.setItem("projects", JSON.stringify(projects));
+
+                // Update the projects array with the updated project
+                const newCurrentProjects = projects.map((pro) => 
+                    pro.id === projectId ? currentProject : pro
+                );
+
+                // Update localStorage
+                localStorage.setItem("projects", JSON.stringify(newCurrentProjects));
+
+                // Hide the board in the UI
+                if (allTheBoards[boardIndex]) {
+                    allTheBoards[boardIndex].style.display = "none";
+                }
+
+                console.log("Board removed successfully!");
             }
         }
-        allTheBoards[boardIndex].style.display = "none";
-        
     }
-    
 }

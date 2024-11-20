@@ -4,6 +4,8 @@ import { notty } from "https://cdn.jsdelivr.net/gh/saarock/notty.js@main/dist/in
 const projectInput = document.querySelector(".project-input");
 const createProjectButton = document.querySelector(".project-btn");
 let projectDiv = document.querySelector(".show-project");
+const projectList = document.getElementById("projectList");
+
 let optionOpen = false;
 
 // can save here index of the project options that are opened by user 
@@ -20,8 +22,9 @@ function isThereInputTextOrNot(message) {
         notty.warning({
             message: "Pleased fill the input",
         });
-        return true;
+        return false;
     }
+    return true;
 };
 
 
@@ -120,7 +123,9 @@ function loadProjects() {
 
     window.document.addEventListener("click", (e) => {
         e.stopPropagation()
+        if (optionsIndexSaverMemory.length >= 1) {
         options[optionsIndexSaverMemory.pop()].style.visibility = "hidden";
+        }
         optionOpen = false;
 
     });
@@ -129,8 +134,8 @@ function loadProjects() {
     deleteProjectBtns.forEach((deleteProjectBtn) => {
         deleteProjectBtn.addEventListener("click", (e) => {
             e.stopPropagation();
-            Allprojects[e.target.id].style.display= "none";
-            deleteProject(Number(e.target.dataset.projectId));
+            Allprojects[e.currentTarget.id].style.display= "none";
+            deleteProject(Number(e.currentTarget.dataset.projectId));
         });
     });
 
@@ -138,7 +143,10 @@ function loadProjects() {
         updateProjectBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             const newProjectName = window.prompt("Enter new Project Name.");
-            updateProject(Number(e.target.dataset.projectId), newProjectName);
+        if (!isThereInputTextOrNot(newProjectName)) {
+            return;
+        }
+            updateProject(Number(e.currentTarget.dataset.projectId), newProjectName);
         });
     });
 }
@@ -178,7 +186,7 @@ function resetOptinsSetting() {
 
 
 createProjectButton.addEventListener("click", () => {
-    if (isThereInputTextOrNot(projectInput.value)) {
+    if (!isThereInputTextOrNot(projectInput.value)) {
         return;
     }
     createProject(projectInput.value);
@@ -188,3 +196,53 @@ createProjectButton.addEventListener("click", () => {
 });
 
 
+
+// Search functionality
+
+// Function to render projects
+function renderProjects(projectsToRender) {
+    const projectList = document.getElementById("projectList");
+    projectList.innerHTML = ""; // Clear existing content
+    projectList.style.visibility = "visible"
+
+    if (projectsToRender.length === 0) {
+        projectList.innerHTML = "<p class='message-not-found'>No projects found</p>";
+        return;
+    }
+
+    projectsToRender.forEach((project) => {
+        const projectDiv = document.createElement("div");
+        projectDiv.className = "project-item";
+        projectDiv.textContent = project.name;
+
+        // Make each project clickable
+        projectDiv.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.href = `project-details.html?id=${project.id}`; // Pass the project ID as a query parameter
+            link.click();
+        });
+
+        projectList.appendChild(projectDiv);
+    });
+}
+
+// Function to filter projects
+function filterProjects(query) {
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
+    const filteredProjects = projects.filter((project) =>
+        project.name.toLowerCase().includes(query.toLowerCase())
+    );
+    renderProjects(filteredProjects);
+}
+
+// Add event listener for search functionality
+document.querySelector(".search-button").addEventListener("click", () => {
+    const query = document.getElementById("searchProject").value;
+    filterProjects(query);
+});
+
+
+
+projectList.addEventListener("click", (event) => {
+    event.currentTarget.style.visibility = "hidden"
+})
