@@ -1,6 +1,4 @@
-import { notty } from "https://cdn.jsdelivr.net/gh/saarock/notty.js@main/dist/index.js";
-
-
+import { saarock as  notty } from "https://cdn.jsdelivr.net/gh/saarock/saarock.js@main/dist/index.js";
 const projectInput = document.querySelector(".project-input");
 const createProjectButton = document.querySelector(".project-btn");
 let projectDiv = document.querySelector(".show-project");

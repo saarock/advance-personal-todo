@@ -1,5 +1,4 @@
-import { notty } from "https://cdn.jsdelivr.net/gh/saarock/notty.js@main/dist/index.js";
-
+import { saarock as notty } from "https://cdn.jsdelivr.net/gh/saarock/saarock.js@main/dist/index.js";
 // All the global methods
 const addBoardButton = document.querySelector(".navs-navbars-nav-navchild-addProject");
 const boardInput = document.querySelector(".navs-navbars-nav-navchild-writeProject");
